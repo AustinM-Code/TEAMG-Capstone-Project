@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eternal Vows - Begin Your Forever Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #F8F7F4; /* Cream background as base */
+            color: #0A2342; /* Deep Blue for base text */
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        .modal {
+            /* Transitions handled by Tailwind classes */
+        }
+        .profile-image {
+            background-size: cover;
+            background-position: center;
+            transition: all 0.3s ease;
+        }
+        /* Ensure modal content is scrollable */
+        .modal > div {
+             max-height: 90vh;
+             overflow-y: auto;
+        }
+        /* Prevent body scroll when modal is open */
+        body.overflow-hidden {
+            overflow: hidden;
+        }
+        /* Custom color approximations (use Tailwind extend in real project) */
+        .bg-deep-blue { background-color: #0A2342; }
+        .text-deep-blue { color: #0A2342; }
+        .bg-cream { background-color: #F8F7F4; }
+        .text-cream { color: #F8F7F4; }
+        .text-gold { color: #B08D57; } /* More accurate gold */
+        .bg-gold { background-color: #B08D57; }
+        .hover\:bg-gold-dark:hover { background-color: #9c7b4d; } /* Darker gold hover */
+        .border-gold { border-color: #B08D57; }
+        .hover\:border-gold-dark:hover { border-color: #9c7b4d; }
+        .focus\:ring-gold:focus { --tw-ring-color: #B08D57; }
+        .form-select, .form-input, .form-textarea {
+             border-color: #D1D5DB; /* Default border color */
+        }
+        .form-select:focus, .form-input:focus, .form-textarea:focus {
+             border-color: #B08D57; /* Gold focus border */
+             --tw-ring-color: #B08D57; /* Gold focus ring */
+             box-shadow: 0 0 0 1px #B08D57;
+        }
+    </style>
+</head>
+<body class="bg-cream text-deep-blue">
+    <nav class="bg-deep-blue shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-ring text-amber-500 text-2xl mr-2"></i> <span class="text-xl font-bold text-white font-[Playfair Display]">EternalVows</span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#" class="border-amber-500 text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Home</a>
+                         </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <button onclick="openModal('login-modal')" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</button>
+                    <button onclick="openModal('register-modal')" class="bg-gold hover:bg-gold-dark text-white px-4 py-2 rounded-md text-sm font-medium transition duration-200">Register Free</button>
+                </div>
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                </div>
+            <div class="pt-4 pb-3 border-t border-gray-700">
+                <div class="flex items-center px-5">
+                    <button onclick="openModal('login-modal'); closeMobileMenu();" class="w-full text-left text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Login</button>
+                </div>
+                <div class="mt-3 px-2 space-y-1">
+                    <button onclick="openModal('register-modal'); closeMobileMenu();" class="w-full text-left bg-gold hover:bg-gold-dark text-white block px-3 py-2 rounded-md text-base font-medium transition duration-200">Register Free</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="relative text-white bg-cover bg-center py-32 lg:py-48" style="background-image: url('https://images.pexels.com/photos/1024967/pexels-photo-1024967.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
+        <div class="absolute inset-0 bg-blue-950 bg-opacity-60 z-0"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center"> <h1 class="text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl mb-6 leading-tight">
+                    Begin Your Forever Journey
+                </h1>
+                <p class="text-xl text-gray-200 max-w-2xl mx-auto mb-10">
+                    Discover meaningful connections and build a lasting relationship with our exclusive community of genuine individuals.
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="openModal('register-modal')" class="bg-gold hover:bg-gold-dark text-white px-8 py-3 rounded-md text-lg font-semibold shadow hover:shadow-lg transition duration-300">Create Your Profile</button>
+                    <button class="bg-white bg-opacity-20 hover:bg-opacity-30 border border-white border-opacity-50 px-8 py-3 rounded-md text-lg font-semibold transition duration-300">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 -mt-16 z-10 relative">
+        <div class="bg-white rounded-lg shadow-xl p-6 border border-gray-200">
+            <h2 class="text-2xl font-semibold text-deep-blue mb-5 text-center md:text-left">Find Your Ideal Partner</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div>
+                    <label for="search-gender" class="block text-sm font-medium text-gray-700 mb-1">Seeking a</label>
+                    <select id="search-gender" class="form-select w-full rounded-md shadow-sm p-2 border">
+                        <option>Bride</option>
+                        <option>Groom</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Age Range</label>
+                    <div class="flex items-center space-x-2">
+                        <select class="form-select w-full rounded-md shadow-sm p-2 border">
+                            <option>18</option> <option selected>25</option> <option>30</option> <option>35</option> <option>40+</option>
+                        </select>
+                        <span class="text-gray-500">to</span>
+                        <select class="form-select w-full rounded-md shadow-sm p-2 border">
+                            <option>25</option> <option selected>30</option> <option>35</option> <option>40</option> <option>50+</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="search-religion" class="block text-sm font-medium text-gray-700 mb-1">Religion</label>
+                    <select id="search-religion" class="form-select w-full rounded-md shadow-sm p-2 border">
+                        <option>Any Religion</option> <option>Hindu</option> <option>Muslim</option> <option>Christian</option> <option>Sikh</option> <option>Jain</option> <option>Buddhist</option><option>Other</option>
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button class="w-full bg-gold hover:bg-gold-dark text-white py-2 px-4 rounded-md font-medium shadow hover:shadow-md transition duration-300">
+                        <i class="fas fa-search mr-1"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-cream py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-4xl font-bold text-deep-blue">Featured Members</h2>
+                <a href="#" class="text-gold hover:text-gold-dark font-semibold transition duration-200">View All <i class="fas fa-arrow-right ml-1"></i></a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div class="profile-card bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden transition duration-300 flex flex-col">
+                    <div class="relative">
+                        <div class="profile-image h-64 w-full" style="background-image:url('images/profile-5.jpg')"></div>
+                        <div class="absolute top-3 right-3 bg-gold text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">Verified</div>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-1">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-deep-blue">Ananya Roy</h3>
+                                    <p class="text-gray-600 text-sm">28 yrs, 5'6", Kolkata</p>
+                                </div>
+                                <button title="Add to Favorites" class="text-gray-400 hover:text-gold transition duration-200 mt-1" onclick="openModal('shortlist-modal')">
+                                    <i class="far fa-bookmark text-xl"></i> </button>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-700 space-y-1">
+                                <p><i class="fas fa-graduation-cap w-4 text-center mr-1.5 text-amber-600"></i> M.A. (Literature), Professor</p>
+                                <p><i class="fas fa-church w-4 text-center mr-1.5 text-amber-600"></i> Hindu, Bengali</p> </div>
+                        </div>
+                        <div class="mt-5 flex gap-3">
+                            <button onclick="openModal('message-modal')" class="flex-1 text-sm bg-gold hover:bg-gold-dark text-white px-3 py-2 rounded-md transition duration-300 shadow hover:shadow-md"><i class="fas fa-envelope mr-1"></i> Connect</button>
+                            <button onclick="showProfile('profile1')" class="flex-1 text-sm border border-gold text-gold hover:bg-amber-50 px-3 py-2 rounded-md transition duration-300"><i class="fas fa-user mr-1"></i> View Profile</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-card bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden transition duration-300 flex flex-col">
+                    <div class="relative">
+                        <div class="profile-image h-64 w-full" style="background-image:url('images/profile-3.jpg')"></div>
+                         </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-1">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-deep-blue">Vikram Singh</h3>
+                                    <p class="text-gray-600 text-sm">31 yrs, 5'11", Mumbai</p>
+                                </div>
+                                <button title="Add to Favorites" class="text-gray-400 hover:text-gold transition duration-200 mt-1" onclick="openModal('shortlist-modal')">
+                                    <i class="far fa-bookmark text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-700 space-y-1">
+                                <p><i class="fas fa-briefcase w-4 text-center mr-1.5 text-amber-600"></i> MBA, Investment Banker</p> <p><i class="fas fa-praying-hands w-4 text-center mr-1.5 text-amber-600"></i> Sikh, Punjabi</p> </div>
+                        </div>
+                        <div class="mt-5 flex gap-3">
+                            <button onclick="openModal('message-modal')" class="flex-1 text-sm bg-gold hover:bg-gold-dark text-white px-3 py-2 rounded-md transition duration-300 shadow hover:shadow-md"><i class="fas fa-envelope mr-1"></i> Connect</button>
+                            <button onclick="showProfile('profile2')" class="flex-1 text-sm border border-gold text-gold hover:bg-amber-50 px-3 py-2 rounded-md transition duration-300"><i class="fas fa-user mr-1"></i> View Profile</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-card bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden transition duration-300 flex flex-col">
+                    <div class="relative">
+                        <div class="profile-image h-64 w-full" style="background-image:url('images/profile-1.jpg')"></div>
+                         <div class="absolute top-3 right-3 bg-gold text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">Verified</div>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-1">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-deep-blue">Aisha Khan</h3>
+                                    <p class="text-gray-600 text-sm">27 yrs, 5'5", Hyderabad</p>
+                                </div>
+                                <button title="Add to Favorites" class="text-gray-400 hover:text-gold transition duration-200 mt-1" onclick="openModal('shortlist-modal')">
+                                    <i class="far fa-bookmark text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-700 space-y-1">
+                                <p><i class="fas fa-paint-brush w-4 text-center mr-1.5 text-amber-600"></i> B.Des, Graphic Designer</p> <p><i class="fas fa-mosque w-4 text-center mr-1.5 text-amber-600"></i> Muslim, Urdu</p> </div>
+                        </div>
+                        <div class="mt-5 flex gap-3">
+                            <button onclick="openModal('message-modal')" class="flex-1 text-sm bg-gold hover:bg-gold-dark text-white px-3 py-2 rounded-md transition duration-300 shadow hover:shadow-md"><i class="fas fa-envelope mr-1"></i> Connect</button>
+                            <button onclick="showProfile('profile3')" class="flex-1 text-sm border border-gold text-gold hover:bg-amber-50 px-3 py-2 rounded-md transition duration-300"><i class="fas fa-user mr-1"></i> View Profile</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-card bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden transition duration-300 flex flex-col">
+                    <div class="relative">
+                        <div class="profile-image h-64 w-full" style="background-image:url('images/profile-2.jpg')"></div>
+                         <div class="absolute top-3 right-3 bg-gold text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">Verified</div>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-1">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-deep-blue">Rohan Mathew</h3>
+                                    <p class="text-gray-600 text-sm">30 yrs, 6'0", Chennai</p>
+                                </div>
+                                <button title="Add to Favorites" class="text-gray-400 hover:text-gold transition duration-200 mt-1" onclick="openModal('shortlist-modal')">
+                                    <i class="far fa-bookmark text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="mt-3 text-sm text-gray-700 space-y-1">
+                                <p><i class="fas fa-laptop-code w-4 text-center mr-1.5 text-amber-600"></i> M.Tech, Data Scientist</p> <p><i class="fas fa-cross w-4 text-center mr-1.5 text-amber-600"></i> Christian, Malayalam</p> </div>
+                        </div>
+                        <div class="mt-5 flex gap-3">
+                            <button onclick="openModal('message-modal')" class="flex-1 text-sm bg-gold hover:bg-gold-dark text-white px-3 py-2 rounded-md transition duration-300 shadow hover:shadow-md"><i class="fas fa-envelope mr-1"></i> Connect</button>
+                            <button onclick="showProfile('profile4')" class="flex-1 text-sm border border-gold text-gold hover:bg-amber-50 px-3 py-2 rounded-md transition duration-300"><i class="fas fa-user mr-1"></i> View Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-16 bg-white"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <h2 class="text-4xl font-bold text-deep-blue text-center mb-12">How Eternal Vows Works</h2>
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                 <div class="p-6">
+                     <div class="mb-4 inline-block p-4 bg-amber-100 rounded-full">
+                          <i class="fas fa-user-plus fa-2x text-gold"></i>
+                     </div>
+                     <h3 class="text-xl font-semibold text-deep-blue mb-2">1. Create Your Profile</h3>
+                     <p class="text-gray-600 text-sm leading-relaxed">Register for free and build your detailed profile, highlighting your personality, preferences, and what you seek in a partner.</p>
+                 </div>
+                 <div class="p-6">
+                     <div class="mb-4 inline-block p-4 bg-amber-100 rounded-full">
+                          <i class="fas fa-search-location fa-2x text-gold"></i>
+                     </div>
+                     <h3 class="text-xl font-semibold text-deep-blue mb-2">2. Discover Matches</h3>
+                     <p class="text-gray-600 text-sm leading-relaxed">Utilize our advanced search filters or receive curated matches based on your preferences and compatibility algorithms.</p>
+                 </div>
+                 <div class="p-6">
+                     <div class="mb-4 inline-block p-4 bg-amber-100 rounded-full">
+                          <i class="fas fa-comments fa-2x text-gold"></i>
+                     </div>
+                     <h3 class="text-xl font-semibold text-deep-blue mb-2">3. Connect & Communicate</h3>
+                     <p class="text-gray-600 text-sm leading-relaxed">Initiate conversations safely and securely through our platform. Get to know potential partners at your own pace.</p>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+
+    <div class="bg-cream py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center text-deep-blue mb-12">Journeys That Began Here</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-md border border-gray-200 text-center hover:shadow-lg transition duration-300">
+                     <img class="h-28 w-28 rounded-full object-cover mx-auto mb-5 border-4 border-amber-200" src="images/profile-1.jpg" alt="Couple">
+                    <h3 class="text-xl font-semibold text-deep-blue">Priya & Sameer</h3>
+                    <p class="text-gold font-semibold mb-4">Married Since 2022</p>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"We found Eternal Vows through a friend. The profiles felt genuine, and the process was straightforward. We connected instantly and are happily married now!"</p>
+                </div>
+                 <div class="bg-white p-8 rounded-lg shadow-md border border-gray-200 text-center hover:shadow-lg transition duration-300">
+                     <img class="h-28 w-28 rounded-full object-cover mx-auto mb-5 border-4 border-amber-200" src="images/profile-2.jpg" alt="Couple">
+                    <h3 class="text-xl font-semibold text-deep-blue">David & Sarah</h3>
+                    <p class="text-gold font-semibold mb-4">Married Since 2021</p>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"The focus on compatibility and shared values really stood out. We appreciate the platform's commitment to privacy and security. Found my soulmate!"</p>
+                </div>
+                 <div class="bg-white p-8 rounded-lg shadow-md border border-gray-200 text-center hover:shadow-lg transition duration-300">
+                     <img class="h-28 w-28 rounded-full object-cover mx-auto mb-5 border-4 border-amber-200" src="images/profile-3.jpg" alt="Couple">
+                    <h3 class="text-xl font-semibold text-deep-blue">Imran & Fatima</h3>
+                    <p class="text-gold font-semibold mb-4">Engaged in 2023</p>
+                    <p class="text-gray-600 text-sm italic leading-relaxed">"We were looking for a serious platform, and Eternal Vows delivered. The detailed profiles helped us find someone truly compatible. Excited for our future!"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-deep-blue text-white">
+        <div class="max-w-4xl mx-auto py-16 px-4 sm:px-6 lg:px-8 lg:py-24 text-center">
+             <h2 class="text-4xl font-bold tracking-tight sm:text-5xl mb-6">
+                 Ready to Find Your Soulmate?
+             </h2>
+             <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-10">
+                 Join Eternal Vows today and start your search for a meaningful, lasting relationship. Your journey to forever begins now.
+             </p>
+             <button onclick="openModal('register-modal')" class="bg-gold hover:bg-gold-dark text-white px-10 py-3 rounded-md text-lg font-semibold shadow hover:shadow-lg transition duration-300">Register Free Today</button>
+        </div>
+    </div>
+
+    <footer class="bg-blue-950 text-white"> <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+                <div class="col-span-2 md:col-span-4 lg:col-span-1 mb-6 lg:mb-0">
+                     <div class="flex items-center mb-2">
+                          <i class="fas fa-ring text-amber-500 text-2xl mr-2"></i>
+                         <span class="text-xl font-bold text-white font-[Playfair Display]">EternalVows</span>
+                     </div>
+                     <p class="text-gray-400 text-sm">Crafting connections for a lifetime.</p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold tracking-wider uppercase text-gray-400 mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">Browse Profiles</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">Membership Plans</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">Success Stories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold tracking-wider uppercase text-gray-400 mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">About Us</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">Contact Us</a></li>
+                         <li><a href="#" class="text-gray-300 hover:text-white text-sm">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold tracking-wider uppercase text-gray-400 mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm">Safety Tips</a></li>
+                    </ul>
+                </div>
+                <div>
+                     <h3 class="text-sm font-semibold tracking-wider uppercase text-gray-400 mb-4">Follow Us</h3>
+                     <div class="flex space-x-4">
+                         <a href="#" class="text-gray-400 hover:text-amber-500 transition"><span class="sr-only">Facebook</span><i class="fab fa-facebook-f fa-lg"></i></a>
+                         <a href="#" class="text-gray-400 hover:text-amber-500 transition"><span class="sr-only">Twitter</span><i class="fab fa-twitter fa-lg"></i></a>
+                         <a href="#" class="text-gray-400 hover:text-amber-500 transition"><span class="sr-only">Instagram</span><i class="fab fa-instagram fa-lg"></i></a>
+                     </div>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-700">
+                <p class="text-gray-400 text-sm text-center">&copy; 2025 Eternal Vows. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="login-modal" class="modal fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 invisible transform scale-95 transition-all duration-300 ease-out" onclick="event.target === this && closeModal('login-modal')">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full text-deep-blue">
+            <div class="p-6 md:p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-3xl font-bold text-deep-blue">Member Login</h3>
+                    <button onclick="closeModal('login-modal')" class="text-gray-400 hover:text-gray-600 transition">
+                        <span class="sr-only">Close</span><i class="fas fa-times fa-lg"></i>
+                    </button>
+                </div>
+                <form class="space-y-6">
+                    <div>
+                        <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email or Profile ID</label>
+                        <input type="text" id="login-email" class="form-input w-full rounded-md shadow-sm p-2.5 border" placeholder="your@email.com">
+                    </div>
+                    <div>
+                        <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" id="login-password" class="form-input w-full rounded-md shadow-sm p-2.5 border" placeholder="********">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-amber-600 focus:ring-gold border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
+                        </div>
+                        <div class="text-sm">
+                            <a href="#" class="font-medium text-gold hover:text-gold-dark">Forgot password?</a>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full bg-gold hover:bg-gold-dark text-white py-2.5 px-4 rounded-md font-semibold shadow hover:shadow-md transition duration-300">Login</button>
+                    </div>
+                </form>
+                 <div class="mt-6 text-center text-sm">
+                    <p class="text-gray-600">
+                        Not a member yet?
+                        <button onclick="switchModal('login-modal', 'register-modal')" class="text-gold hover:text-gold-dark font-medium">Register Free</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="register-modal" class="modal fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 invisible transform scale-95 transition-all duration-300 ease-out" onclick="event.target === this && closeModal('register-modal')">
+         <div class="bg-white rounded-lg shadow-xl max-w-md w-full text-deep-blue">
+            <div class="p-6 md:p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-3xl font-bold text-deep-blue">Create Your Profile</h3>
+                    <button onclick="closeModal('register-modal')" class="text-gray-400 hover:text-gray-600 transition">
+                         <span class="sr-only">Close</span><i class="fas fa-times fa-lg"></i>
+                    </button>
+                </div>
+                <form class="space-y-5">
+                     <div>
+                         <label class="block text-sm font-medium text-gray-700 mb-1">Profile created for</label>
+                         <select class="form-select w-full rounded-md shadow-sm p-2.5 border">
+                             <option>Myself</option><option>Son</option><option>Daughter</option><option>Other Relative/Friend</option>
+                         </select>
+                     </div>
+                    <div>
+                        <label for="register-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                        <input type="text" id="register-name" class="form-input w-full rounded-md shadow-sm p-2.5 border" placeholder="Enter your full name">
+                    </div>
+                    <div>
+                        <label for="register-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="register-email" class="form-input w-full rounded-md shadow-sm p-2.5 border" placeholder="Enter your email">
+                    </div>
+                    <div>
+                        <label for="register-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" id="register-password" class="form-input w-full rounded-md shadow-sm p-2.5 border" placeholder="Create a strong password">
+                    </div>
+                    <div class="flex items-start">
+                        <input id="terms" name="terms" type="checkbox" class="h-4 w-4 text-amber-600 focus:ring-gold border-gray-300 rounded mt-0.5">
+                        <label for="terms" class="ml-2 block text-sm text-gray-700">
+                            I agree to the <a href="#" class="text-gold hover:text-gold-dark underline">Terms of Service</a> and <a href="#" class="text-gold hover:text-gold-dark underline">Privacy Policy</a>.
+                        </label>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full bg-gold hover:bg-gold-dark text-white py-2.5 px-4 rounded-md font-semibold shadow hover:shadow-md transition duration-300">Register Free</button>
+                    </div>
+                </form>
+                <div class="mt-6 text-center text-sm">
+                    <p class="text-gray-600">
+                        Already have an account?
+                        <button onclick="switchModal('register-modal', 'login-modal')" class="text-gold hover:text-gold-dark font-medium">Login Here</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="message-modal" class="modal fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 invisible transform scale-95 transition-all duration-300 ease-out" onclick="event.target === this && closeModal('message-modal')">
+        <div class="bg-white rounded-lg shadow-xl max-w-lg w-full text-deep-blue">
+            <div class="p-6 md:p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-3xl font-bold text-deep-blue">Send Message</h3>
+                    <button onclick="closeModal('message-modal')" class="text-gray-400 hover:text-gray-600 transition">
+                        <span class="sr-only">Close</span><i class="fas fa-times fa-lg"></i>
+                    </button>
+                </div>
+                 <div class="flex items-center border-b border-gray-200 pb-4 mb-5">
+                    <img class="h-14 w-14 rounded-full object-cover border-2 border-amber-200" id="message-recipient-img" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Recipient">
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-500">To:</p>
+                        <h4 class="text-lg font-semibold text-deep-blue" id="message-recipient-name">Recipient Name</h4>
+                    </div>
+                </div>
+                <form class="space-y-4">
+                    <div>
+                        <label for="message-body" class="block text-sm font-medium text-gray-700 mb-1 sr-only">Message</label>
+                        <textarea id="message-body" rows="6" class="form-textarea w-full rounded-md shadow-sm p-2.5 border" placeholder="Compose your message..." required></textarea>
+                    </div>
+                    <div class="pt-2">
+                        <button type="submit" class="w-full bg-gold hover:bg-gold-dark text-white py-2.5 px-4 rounded-md font-semibold shadow hover:shadow-md transition duration-300">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+     <div id="shortlist-modal" class="modal fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 invisible transform scale-95 transition-all duration-300 ease-out" onclick="event.target === this && closeModal('shortlist-modal')">
+        <div class="bg-white rounded-lg shadow-xl max-w-sm w-full text-deep-blue">
+            <div class="p-8 text-center">
+                <div class="text-green-500 mb-5">
+                    <i class="fas fa-check-circle fa-4x"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-deep-blue mb-3">Added to Favorites!</h3>
+                <p class="text-gray-600 mb-6">This profile has been saved to your favorites list for easy access later.</p>
+                <button onclick="closeModal('shortlist-modal')" class="bg-gold hover:bg-gold-dark text-white py-2 px-6 rounded-md font-semibold shadow hover:shadow-md transition duration-300">Okay</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="profile-detail-modal" class="modal fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 invisible transform scale-95 transition-all duration-300 ease-out" onclick="event.target === this && closeModal('profile-detail-modal')">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full text-deep-blue"> <div class="p-6 md:p-8 relative">
+                <button onclick="closeModal('profile-detail-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition z-10">
+                    <span class="sr-only">Close</span><i class="fas fa-times fa-lg"></i>
+                </button>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-1">
+                        <img id="profile-modal-img" src="https://via.placeholder.com/400x500/cccccc/969696?text=Loading..." alt="Profile Photo" class="rounded-lg w-full h-auto object-cover shadow-lg mb-5 border-4 border-white">
+                        <div class="flex flex-col space-y-3">
+                             <button onclick="openModal('message-modal'); closeModal('profile-detail-modal');" class="w-full text-sm bg-gold hover:bg-gold-dark text-white px-4 py-2.5 rounded-md font-semibold transition duration-300 shadow hover:shadow-md"><i class="fas fa-envelope mr-1.5"></i> Send Message</button>
+                             <button onclick="openModal('shortlist-modal');" class="w-full text-sm border border-gold text-gold hover:bg-amber-50 px-4 py-2.5 rounded-md font-semibold transition duration-300"><i class="far fa-bookmark mr-1.5"></i> Add to Favorites</button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 space-y-6">
+                        <div>
+                            <h3 id="profile-modal-name" class="text-4xl font-bold text-deep-blue mb-1">Profile Name</h3>
+                             <p id="profile-modal-basic-header" class="text-gray-600 text-lg">Loading details...</p>
+                        </div>
+
+                        <div class="border-t border-gray-200 pt-5">
+                            <h4 class="text-xl font-semibold text-gold mb-3 tracking-wide">About <span id="profile-modal-firstname"></span></h4>
+                            <p id="profile-modal-about" class="text-gray-700 leading-relaxed">Loading details...</p>
+                        </div>
+
+                         <div class="border-t border-gray-200 pt-5">
+                            <h4 class="text-xl font-semibold text-gold mb-3 tracking-wide">Basic Information</h4>
+                            <dl class="grid grid-cols-2 gap-x-6 gap-y-3 text-gray-700">
+                                <dt class="font-semibold">Age / Height:</dt> <dd id="profile-modal-age-height">-- / --</dd>
+                                <dt class="font-semibold">Religion:</dt> <dd id="profile-modal-religion">--</dd>
+                                <dt class="font-semibold">Location:</dt> <dd id="profile-modal-location">--</dd>
+                                <dt class="font-semibold">Mother Tongue:</dt> <dd id="profile-modal-language">--</dd>
+                                <dt class="font-semibold">Marital Status:</dt> <dd id="profile-modal-marital">--</dd>
+                                <dt class="font-semibold">Created By:</dt> <dd id="profile-modal-createdby">--</dd>
+                            </dl>
+                        </div>
+
+                         <div class="border-t border-gray-200 pt-5">
+                            <h4 class="text-xl font-semibold text-gold mb-3 tracking-wide">Education & Career</h4>
+                            <dl class="grid grid-cols-2 gap-x-6 gap-y-3 text-gray-700">
+                                <dt class="font-semibold">Education:</dt> <dd id="profile-modal-education">--</dd>
+                                <dt class="font-semibold">Profession:</dt> <dd id="profile-modal-profession">--</dd>
+                                <dt class="font-semibold">Income:</dt> <dd id="profile-modal-income">--</dd>
+                            </dl>
+                        </div>
+                         </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Dummy Profile Data (Update with new names/details fitting the theme)
+        const profiles = {
+             profile1: { name: "Ananya Roy", firstName: "Ananya", age: 28, location: "Kolkata", height: "5'6\"", religion: "Hindu, Bengali", language: "Bengali, English, Hindi", marital: "Never Married", createdBy: "Self", education: "M.A. (Literature)", profession: "Professor", income: "Disclosed upon request", about: "An avid reader and intellectual, passionate about literature and culture. Seeking a well-educated, grounded partner who values family and intellectual pursuits. Enjoys classical music, theatre, and meaningful conversations.", img:'images/profile-1.jpg' },
+             profile2: { name: "Vikram Singh", firstName: "Vikram", age: 31, location: "Mumbai", height: "5'11\"", religion: "Sikh, Punjabi", language: "Punjabi, Hindi, English", marital: "Never Married", createdBy: "Self", education: "MBA (Finance)", profession: "Investment Banker", income: "₹50 Lakhs+", about: "Ambitious and driven professional with a balanced outlook on life. Enjoys staying active, traveling, and exploring financial markets. Looking for a smart, independent, and family-oriented partner.", img:'images/profile-2.jpg' },
+             profile3: { name: "Aisha Khan", firstName: "Aisha", age: 27, location: "Hyderabad", height: "5'5\"", religion: "Muslim, Sunni", language: "Urdu, English, Hindi", marital: "Never Married", createdBy: "Parents", education: "B.Des (Graphic Design)", profession: "Graphic Designer", income: "₹12-15 Lakhs", about: "Creative and artistic soul with a modern outlook rooted in traditional values. Enjoys painting, calligraphy, and spending time with loved ones. Seeking a kind, understanding, and supportive partner.", img:'images/profile-3.jpg' },
+             profile4: { name: "Rohan Mathew", firstName: "Rohan", age: 30, location: "Chennai", height: "6'0\"", religion: "Christian, Syrian Catholic", language: "Malayalam, English, Tamil", marital: "Never Married", createdBy: "Self", education: "M.Tech (Data Science)", profession: "Data Scientist", income: "₹30-35 Lakhs", about: "Analytical and tech-savvy individual with a love for problem-solving. Enjoys coding, playing the guitar, and long drives. Looking for a compatible partner who is intelligent, humorous, and values honesty.", img:'images/profile-4.jpg' },
+        };
+
+         // --- Modal Handling Logic (Keep the improved JS from previous step) ---
+        // Function to open a modal
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                requestAnimationFrame(() => {
+                    modal.classList.remove('invisible', 'opacity-0', 'scale-95');
+                    modal.classList.add('visible', 'opacity-100'); // Default scale is 100
+                });
+                document.body.classList.add('overflow-hidden');
+            }
+             // Specific logic for message modal if needed (e.g., pre-fill recipient)
+            if (modalId === 'message-modal') {
+                // Update recipient details if necessary based on context
+                // Example: Get recipient name/img from the clicked profile card/button
+                // const profileCard = /* logic to find triggering element */;
+                // if (profileCard) {
+                //    document.getElementById('message-recipient-name').textContent = profileCard.dataset.name;
+                //    document.getElementById('message-recipient-img').src = profileCard.dataset.img;
+                // }
+            }
+        }
+
+        // Function to close a modal
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('visible', 'opacity-100');
+                modal.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    modal.classList.add('invisible');
+                    const anyModalOpen = document.querySelector('.modal.visible');
+                    if (!anyModalOpen) {
+                       document.body.classList.remove('overflow-hidden');
+                    }
+                }, 300); // Match transition duration
+            }
+        }
+
+        // Function to switch between modals
+        function switchModal(fromModalId, toModalId) {
+            closeModal(fromModalId);
+            setTimeout(() => {
+                openModal(toModalId);
+            }, 150);
+        }
+
+        // Function to show profile details in the modal
+        function showProfile(profileId) {
+            const profileData = profiles[profileId];
+            if (!profileData) {
+                console.error("Profile data not found for ID:", profileId);
+                return;
+            }
+
+            // Populate Profile Detail Modal
+            document.getElementById('profile-modal-name').textContent = profileData.name;
+            document.getElementById('profile-modal-basic-header').textContent = `${profileData.age} yrs, ${profileData.height}, ${profileData.religion}, ${profileData.location}`;
+            document.getElementById('profile-modal-firstname').textContent = profileData.firstName;
+            document.getElementById('profile-modal-img').src = profileData.img;
+            document.getElementById('profile-modal-img').alt = `Photo of ${profileData.name}`;
+            document.getElementById('profile-modal-about').textContent = profileData.about;
+            document.getElementById('profile-modal-age-height').textContent = `${profileData.age} yrs / ${profileData.height}`;
+            document.getElementById('profile-modal-religion').textContent = profileData.religion;
+            document.getElementById('profile-modal-location').textContent = profileData.location;
+            document.getElementById('profile-modal-language').textContent = profileData.language;
+            document.getElementById('profile-modal-marital').textContent = profileData.marital;
+            document.getElementById('profile-modal-createdby').textContent = profileData.createdBy;
+            document.getElementById('profile-modal-education').textContent = profileData.education;
+            document.getElementById('profile-modal-profession').textContent = profileData.profession;
+            document.getElementById('profile-modal-income').textContent = profileData.income || 'Not specified';
+
+            // Update Message Modal Recipient Info Dynamically when profile modal opens (or trigger on Message button click)
+             document.getElementById('message-recipient-img').src = profileData.img;
+             document.getElementById('message-recipient-name').textContent = profileData.name;
+
+            openModal('profile-detail-modal');
+        }
+
+        // Mobile Menu Toggle Logic
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const body = document.body;
+
+         function closeMobileMenu() {
+             mobileMenuButton.setAttribute('aria-expanded', 'false');
+             mobileMenu.classList.add('hidden');
+             mobileMenuButton.querySelector('svg').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />'; // Menu icon
+             const anyModalOpen = document.querySelector('.modal.visible');
+             if (!anyModalOpen) {
+                 body.classList.remove('overflow-hidden');
+             }
+         }
+
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            if (!isExpanded) {
+                 mobileMenuButton.setAttribute('aria-expanded', 'true');
+                 mobileMenu.classList.remove('hidden');
+                 mobileMenuButton.querySelector('svg').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />'; // Close icon
+                 body.classList.add('overflow-hidden');
+            } else {
+                 closeMobileMenu();
+            }
+        });
+
+        // Optional: Close modal on Escape key press
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                 const openModals = document.querySelectorAll('.modal.visible');
+                 if (openModals.length > 0) {
+                     closeModal(openModals[openModals.length - 1].id);
+                 } else if (mobileMenuButton.getAttribute('aria-expanded') === 'true') {
+                     closeMobileMenu();
+                 }
+            }
+        });
+
+    </script>
+
+</body>
+</html>
