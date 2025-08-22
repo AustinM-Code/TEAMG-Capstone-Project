@@ -1,0 +1,46 @@
+/* Custom Styles for KonecX */
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #F8F7F4; /* Cream background as base */
+    color: #0A2342; /* Deep Blue for base text */
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+}
+.profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+.modal {
+    /* Transitions handled by Tailwind classes */
+}
+.profile-image {
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s ease;
+}
+.modal > div {
+     max-height: 90vh;
+     overflow-y: auto;
+}
+body.overflow-hidden {
+    overflow: hidden;
+}
+.bg-deep-blue { background-color: #0A2342; }
+.text-deep-blue { color: #0A2342; }
+.bg-cream { background-color: #F8F7F4; }
+.text-cream { color: #F8F7F4; }
+.text-gold { color: #B08D57; }
+.bg-gold { background-color: #B08D57; }
+.hover\:bg-gold-dark:hover { background-color: #9c7b4d; }
+.border-gold { border-color: #B08D57; }
+.hover\:border-gold-dark:hover { border-color: #9c7b4d; }
+.focus\:ring-gold:focus { --tw-ring-color: #B08D57; }
+.form-select, .form-input, .form-textarea {
+     border-color: #D1D5DB;
+}
+.form-select:focus, .form-input:focus, .form-textarea:focus {
+     border-color: #B08D57;
+     --tw-ring-color: #B08D57;
+     box-shadow: 0 0 0 1px #B08D57;
+}
